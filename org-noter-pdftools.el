@@ -174,6 +174,14 @@ To use this, `org-noter-pdftools-use-org-id' has to be t."
          :search-string search-string
          :original-property property)))))
 
+(defun org-noter-pdftools--location-at-point (&optional pom)
+  "Return location at point.
+When point-or-marker POM is specified return location at POM."
+  (if-let ((pom (or pom (point)))
+           (link (org-entry-get pom org-noter-property-note-location)))
+      (org-noter-pdftools--parse-link link)
+    (user-error "No location at point")))
+
 (defun org-noter-pdftools--pretty-print-location (location)
   "Function for print the LOCATION link."
   (org-noter--with-valid-session
